@@ -10,37 +10,49 @@ width = 800
 height = 600
 
 def refresh2d(width, height):
-    glViewport(0, 0, width, height)
+    glViewport(width/2, height/2, width, height)
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
-    glOrtho(0.0, width, 0.0, height, 0.0, 1.0)
+    gluOrtho2D(0,width,0,height);
     glMatrixMode (GL_MODELVIEW)
     glLoadIdentity()
 
 def draw_line():
+    glColor3f(1.0, 1.0, 1.0)
+
     glBegin(GL_LINES)
-    glVertex2f(0, height/2)                                   # bottom left point
-    glVertex2f(width, height/2)                           # bottom right point
-    glVertex2f(width/2, height)                  # top right point
-    glVertex2f(width/2, 0)                          # top left point
+    glVertex2d(1,height/2)                                   # bottom left point
+    glVertex2d(1, -1*(height/2))                           # bottom right point
+
+    glVertex2d(width/2, 0)                  # top right point
+    glVertex2d(0, 0)                          # top left point
+
     glEnd()
 
-def draw_shape():
-    shape = raw_input()
+
+def draw_shape(shape):
+    glColor3f(0.0, 0.0, 1.0)                           # set color to                          # top left point
+    glLoadIdentity()
     if (shape=='rectangle'):                                # start drawing a rectangle
         glBegin(GL_QUADS)
-        glVertex2f(0, 0)                                   # bottom left point
-        glVertex2f(0 + 200, 0)                           # bottom right point
-        glVertex2f(0 + 200, 0 + 200)                  # top right point
-        glVertex2f(0, 0 + 200)
-        glColor3f(0.0, 0.0, 1.0)                           # set color to                          # top left point
+        glVertex2f(10, 10)                                   # bottom left point
+        glVertex2f(10+ 200, 10)                           # bottom right point
+        glVertex2f(10 + 200, 10 + 200)                  # top right point
+        glVertex2f(10, 10 + 200)
         glEnd()
+    glFlush()
 
 def draw():
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glLoadIdentity()
+
     refresh2d(width,height)
     draw_line()
+
+    glLoadIdentity()
+    shape = raw_input()
+    draw_shape(shape)
     glutSwapBuffers()
 
 
